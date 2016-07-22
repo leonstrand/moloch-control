@@ -54,15 +54,17 @@ if ! dpkg -l | grep -q oracle-java8-installer; then
   execute $command
 fi
 
-if [ -d moloch ]; then
+if [ -d ~/moloch ]; then
   echo #verbose
   echo $0: detected existing moloch directory, removing #verbose
-  command='time rm -rf moloch'
+  command='time rm -rf ~/moloch'
   execute $command
 fi
+command='cd ~'
+execute $command
 command='time git clone https://github.com/leonstrand/moloch'
 execute $command
-command='cd moloch'
+command='cd ~/moloch'
 execute $command
 command='time ./easybutton-singlehost.sh'
 execute $command
