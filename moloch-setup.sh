@@ -43,6 +43,8 @@ execute n $command
 command='diff /tmp/ethtool1 /tmp/ethtool2'
 execute n $command
 
+command='time sudo apt-get -y install software-properties-common'
+execute $command
 if ! dpkg -l | grep -q oracle-java8-installer; then
   command='echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections -v'
   execute $command
