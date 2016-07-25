@@ -30,13 +30,19 @@ capture
 
 if [ -f $(pwd)/nohup.out ]; then
   echo #debug
-  echo sudo lsof $(pwd)/nohup.out 2\>/dev/null #debug
-  sudo lsof $(pwd)/nohup.out 2>/dev/null #debug
-  if ! sudo lsof $(pwd)/nohup.out 2>/dev/null; then
-    echo #verbose
-    echo $0: $(pwd)/nohup.out present but not open
-    echo sudo rm -v nohup.out #verbose
-    sudo rm -v nohup.out
+  echo #debug
+  echo $0: $(pwd)/nohup.out exists #debug
+  if [ -s $(pwd)/nohup.out ]; then
+    echo $0: $(pwd)/nohup.out has size #debug
+    if ! sudo lsof $(pwd)/nohup.out 1>/dev/null 2>&1; then
+      echo $0: $(pwd)/nohup.out not open #verbose
+      echo sudo rm -v nohup.out #verbose
+      sudo rm -v nohup.out
+    else
+      echo $0: $(pwd)/nohup.out open #verbose
+      echo sudo lsof $(pwd)/nohup.out 2\>/dev/null #verbose
+      sudo lsof $(pwd)/nohup.out 2>/dev/null #verbose
+    fi
   fi
 fi
 
