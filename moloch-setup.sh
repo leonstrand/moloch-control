@@ -56,6 +56,9 @@ if ! dpkg -l | grep -q oracle-java8-installer; then
   execute $command
 fi
 
+command='time apt-get -y install python'
+execute $command
+
 if [ -d ~/moloch ]; then
   echo #verbose
   echo $0: detected existing moloch directory, removing #verbose
