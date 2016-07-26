@@ -25,12 +25,12 @@ if ! dpkg -l | grep -q ethtool; then
 fi
 echo #verbose
 echo $0: checking for network interface features for $interface in /etc/rc.local recommended by moloch #verbose
-if grep '^\s*ethtool\s*-K\s*eth0\s*tx\s*off\s*sg\s*off\s*gro\s*off\s*gso\s*off\s*lro\s*off\s*tso\s*off\s*$' /etc/rc.local; then
+if grep '^\s*ethtool\s*-K\s*'$interface'\s*tx\s*off\s*sg\s*off\s*gro\s*off\s*gso\s*off\s*lro\s*off\s*tso\s*off\s*$' /etc/rc.local; then
   echo $0: already present #verbose
 else
   echo $0: not already present, setting... #verbose
-  echo \(echo\; echo \'ethtool -K eth0 tx off sg off gro off gso off lro off tso off\'\) \| tee -a /etc/rc.local
-  (echo; echo 'ethtool -K eth0 tx off sg off gro off gso off lro off tso off') | tee -a /etc/rc.local
+  echo \(echo\; echo \'ethtool -K $interface tx off sg off gro off gso off lro off tso off\'\) \| tee -a /etc/rc.local
+  (echo; echo 'ethtool -K '$interface' tx off sg off gro off gso off lro off tso off') | tee -a /etc/rc.local
 fi
 echo #verbose
 echo $0: setting execute mode for all classes on /etc/rc.local #verbose
@@ -40,7 +40,7 @@ echo #verbose
 echo $0: setting network interface features for $interface in /etc/rc.local recommended by moloch in current session #verbose
 command='ethtool -k $interface >/tmp/ethtool1'
 execute n $command
-command='ethtool -K eth0 tx off sg off gro off gso off lro off tso off'
+command='ethtool -K '$interface' tx off sg off gro off gso off lro off tso off'
 execute n $command
 command='ethtool -k $interface >/tmp/ethtool2'
 execute n $command
