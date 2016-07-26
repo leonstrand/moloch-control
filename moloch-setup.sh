@@ -90,7 +90,7 @@ if [ -f $config ]; then
   else
     echo $0: setting capture interface in $config to $interface #verbose
     sed -i 's/^\(interface=\).*$/\1'$interface'/' $config
-    echo $0: -n 'interface after change: ' #verbose
+    echo -n $0: interface after change:' ' #verbose
     grep '^interface' $config #verbose
   fi
   echo $0: checking for readTruncatedPackets in $config #verbose
