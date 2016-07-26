@@ -19,6 +19,10 @@ execute() {
 }
 
 interface='eth0'
+if ! dpkg -l | grep -q ethtool; then
+  command='time apt-get -y install ethtool'
+  execute $command
+fi
 echo #verbose
 echo $0: checking for network interface features for $interface in /etc/rc.local recommended by moloch #verbose
 if grep '^\s*ethtool\s*-K\s*eth0\s*tx\s*off\s*sg\s*off\s*gro\s*off\s*gso\s*off\s*lro\s*off\s*tso\s*off\s*$' /etc/rc.local; then
