@@ -26,9 +26,9 @@ fi
 echo #verbose
 echo $0: checking for network interface features for $interface in /etc/rc.local recommended by moloch #verbose
 if grep '^\s*ethtool\s*-K\s*eth0\s*tx\s*off\s*sg\s*off\s*gro\s*off\s*gso\s*off\s*lro\s*off\s*tso\s*off\s*$' /etc/rc.local; then
-  echo $0:  already present #verbose
+  echo $0: already present #verbose
 else
-  echo $0:  not already present, setting... #verbose
+  echo $0: not already present, setting... #verbose
   echo \(echo\; echo \'ethtool -K eth0 tx off sg off gro off gso off lro off tso off\'\) \| tee -a /etc/rc.local
   (echo; echo 'ethtool -K eth0 tx off sg off gro off gso off lro off tso off') | tee -a /etc/rc.local
 fi
