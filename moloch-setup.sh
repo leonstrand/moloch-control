@@ -62,8 +62,10 @@ if ! dpkg -l | grep -q oracle-java8-installer; then
   execute $command
 fi
 
-command='time apt-get -y install python'
-execute $command
+if ! dpkg -l | awk '{print $2}' | grep -q '^python$'; then
+  command='time apt-get -y install python'
+  execute $command
+fi
 
 if [ -d ~/moloch ]; then
   echo #verbose
