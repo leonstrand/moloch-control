@@ -18,7 +18,7 @@ execute() {
   eval $__command
 }
 
-interface='eth0'
+interface="$(ip -o link show | awk -F': ' '{print $2}' | egrep -v 'lo|docker')"
 if ! dpkg -l | grep -q ethtool; then
   command='time apt-get -y install ethtool'
   execute $command
@@ -80,8 +80,17 @@ execute $command
 command='time ./easybutton-singlehost.sh'
 execute $command
 
+echo #verbose
 config=/data/moloch/etc/config.ini
 if [ -f $config ]; then
+  if [ "$interface" == 'eth0' ]; then
+    echo $0: capture interface in $config already set to eth0, no need to change #verbose
+  else
+    echo $0: setting capture interface in $config to $interface #verbose
+    sed -i 's/^\(interface=\).*$/\1'$interface'/' $config
+    echo $0: -n 'interface after change: ' #verbose
+    grep '^interface' $config #verbose
+  fi
   echo $0: checking for readTruncatedPackets in $config #verbose
   if grep -q '^\s*readTruncatedPackets\s*=\s*true\s*$' $config; then
     echo $0: already present #verbose
