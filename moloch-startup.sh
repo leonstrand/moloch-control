@@ -22,7 +22,6 @@ execute() {
 directory=/data/moloch/bin
 
 if [ -n "$1" ]; then
-  echo $0: component specified on command line #debug
   components="$@"
 else
   components='
