@@ -33,11 +33,11 @@ fi
 
 
 if [ -f $(pwd)/nohup.out ]; then
-  echo #debug
-  echo #debug
-  echo $0: $(pwd)/nohup.out exists #debug
+  echo #verbose
+  echo #verbose
+  echo $0: $(pwd)/nohup.out exists #verbose
   if [ -s $(pwd)/nohup.out ]; then
-    echo $0: $(pwd)/nohup.out has size #debug
+    echo $0: $(pwd)/nohup.out has size #verbose
     if ! sudo lsof $(pwd)/nohup.out 1>/dev/null 2>&1; then
       echo $0: $(pwd)/nohup.out not open #verbose
       echo sudo rm -v nohup.out #verbose
@@ -111,8 +111,6 @@ for component in $components; do
       echo $0: warning: component $component not supported, skipping...
     ;;
   esac
-  #echo $0: server: $server #debug
-  #ls -alh $server #debug
 done
 
 sleep 1
