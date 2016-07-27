@@ -21,11 +21,16 @@ execute() {
 
 directory=/data/moloch/bin
 
-components='
-elasticsearch
-viewer
-capture
-'
+if [ -n "$1" ]; then
+  echo $0: component specified on command line #debug
+  components="$@"
+else
+  components='
+    elasticsearch
+    viewer
+    capture
+  '
+fi
 
 
 if [ -f $(pwd)/nohup.out ]; then
@@ -47,6 +52,11 @@ if [ -f $(pwd)/nohup.out ]; then
 fi
 
 for component in $components; do
+  case $component in
+    es|e) component='elasticsearch';;
+    v)    component='viewer';;
+    c)    component='capture';;
+  esac
   echo #verbose
   echo #verbose
   echo component: $component #verbose
@@ -97,6 +107,9 @@ for component in $components; do
           :
         done
       fi
+    ;;
+    *)
+      echo $0: warning: component $component not supported, skipping...
     ;;
   esac
   #echo $0: server: $server #debug
