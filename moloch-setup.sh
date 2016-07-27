@@ -79,6 +79,12 @@ command='time git clone https://github.com/leonstrand/moloch'
 execute $command
 command='cd ~/moloch'
 execute $command
+
+echo #verbose
+echo $0: preventing capture start #verbose
+sed -i 's/^\(\s*nohup.*capture.*\)$/#\1/' ./easybutton-singlehost.sh
+grep 'nohup.*capture' ./easybutton-singlehost.sh
+
 command='time ./easybutton-singlehost.sh'
 execute $command
 
