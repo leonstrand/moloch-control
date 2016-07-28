@@ -83,6 +83,7 @@ for component in $components; do
           echo $0: elasticsearch cluster not up yet #verbose
           sleep 1
         done
+        sleep 1
       fi
     ;;
     viewer|capture)
