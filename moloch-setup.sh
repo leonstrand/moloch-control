@@ -115,6 +115,18 @@ if [ -f $config ]; then
   fi
   command='grep -C5 readTruncatedPackets '$config
   execute  $command
+  echo $0: setting certFile #verbose
+  sed -i 's/^\(\s*certFile=\).*$/\1\/data\/moloch\/etc\/moloch.crt/' $config
+  command='grep certFile '$config
+  execute $command
+  echo $0: setting keyFile #verbose
+  sed -i 's/^\(\s*keyFile=\).*$/\1\/data\/moloch\/etc\/moloch.key/' $config
+  command='grep keyFile '$config
+  execute $command
+  echo $0: setting caTrustFile #verbose
+  sed -i 's/^\(\s*caTrustFile=\).*$/\1\/data\/moloch\/etc\/roots.cert/' $config
+  command='grep caTrustFile '$config
+  execute $command
 else
   echo $0: error $config does not exist
   exit 1
